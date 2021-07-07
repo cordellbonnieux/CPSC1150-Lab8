@@ -7,7 +7,7 @@ public class Arrays {
         double[] values = new double[5];
         getValues(values);
 
-        // if you want to test the other average() method
+        // uncomment to test the other (integer) average() method
         //int[] testInts = {3, 4, 5, 6, 7};
         //System.out.println("average is " + average(testInts));
 
@@ -16,7 +16,7 @@ public class Arrays {
         double average = average(values);
 
         // print the average
-        System.out.println(average);
+        System.out.println("The avaerage of the array is: " + average);
         
         
     }
@@ -33,7 +33,7 @@ public class Arrays {
         for (int i = 1; i <= 5; i++) {
             System.out.print("Value #" + i + ": ");
             values[i-1] = scan.nextDouble();
-            System.out.println();
+            //System.out.println();
         }
 
         // Print out the current values
@@ -62,6 +62,17 @@ public class Arrays {
 
 	public static double average(double[] array) {
 
-		return array;
+        // store the sum; store the index num
+        double sum = 0;
+        int num = 0;
+
+        // loop and assign
+        for (int i = 0; i < array.length; i++) {
+            sum += array[i];
+            num++;
+        }
+
+        // return the average
+        return sum / num;
 	}
 }
