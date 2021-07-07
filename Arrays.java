@@ -1,4 +1,15 @@
 import java.util.Scanner;
+/**
+ * Arrays.java
+ * This program reads 5 double values, then returns their average; all inside in the console.
+ * 
+ * Class: CPSC 1050 W01
+ * Instructor: Dr. Bita Shadgar
+ * 
+ * @author Cordell Bonnieux
+ * @version 1.0
+ * @since 2021-07-07
+ */
 public class Arrays {
 
     public static void main(String[] args) {
@@ -21,6 +32,10 @@ public class Arrays {
         
     }
 
+    /**
+     * Receives a double array, then reads in 5 values to that array
+     * @param values the array in which values are read into
+     */
     public static void getValues(double[] values) {
 
         // create scanner object
@@ -45,6 +60,12 @@ public class Arrays {
         scan.close();
     }
 
+    /**
+     * Takes in an array of integers, sums them, then divides the result
+     * by the number of array items, finally returns the result.
+     * @param array an array of integers to be averaged
+     * @return an integer which is the average of the sum of array
+     */
 	public static int average(int[] array) {
 
         // store the sum; store the index num
@@ -60,6 +81,12 @@ public class Arrays {
         return sum / num;
 	}
 
+    /**
+     * Takes in an array of doubles, sums them, then divides the result
+     * by the number of array items, finally returns the result.
+     * @param array an array of doubles to be averaged
+     * @return an integer which is the average of the sum of array
+     */
 	public static double average(double[] array) {
 
         // store the sum; store the index num
