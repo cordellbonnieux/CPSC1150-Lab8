@@ -9,14 +9,4 @@ public class TestSwing {
 		else 
 			JOptionPane.showMessageDialog(null, "Invalid Data: " + num + " is not a positive number!"  );
 	}
-
-	public static int average(int[] array) {
-
-
-	}
-
-	public static double average(double[] array) {
-
-		
-	}
 }
