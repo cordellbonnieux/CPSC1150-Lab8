@@ -1,4 +1,3 @@
-import java.util.*;
 import javax.swing.JOptionPane;
 /**
  * 
@@ -11,7 +10,7 @@ public class Matrix {
     public static void main(String[] args) {
         
         // 2D array reference
-        double[][] matrix = ((args.length > 0) ? convertArray(args) : new double[0][0]);
+        double[][] matrix = ((args.length > 1) ? convertArray(args) : new double[0][0]);
 
         String choice = JOptionPane.showInputDialog(null, "Enter the digit corresponding to your desired task: \n 1 : Create a new matrix \n 2 : Display current matrix \n 3 : Square current matrix \n 4 : Multiply current matrix with a coefficient \n 5 : Check if current matrix is symmetric \n 6 : Quit the program ");
 
@@ -26,7 +25,7 @@ public class Matrix {
             case 2: // print matrix
                 if (matrix.length == 0) { // check for matrix
                     JOptionPane.showMessageDialog(null, "You need to create an array first!");
-                    main(null); 
+                    main(new String[] {}); 
                 } 
                 printMatrix(matrix);
                 main(returnMatrix(matrix)); // return to main menu
@@ -34,7 +33,7 @@ public class Matrix {
             case 3: // square matrix
                 if (matrix.length == 0) { // check for matrix
                     JOptionPane.showMessageDialog(null, "You need to create an array first!");
-                    main(null); 
+                    main(new String[] {});
                 } 
                 square(matrix);
                 main(returnMatrix(matrix)); // return to main menu
@@ -42,7 +41,7 @@ public class Matrix {
             case 4: // multiply matrix
                 if (matrix.length == 0) { // check for matrix
                     JOptionPane.showMessageDialog(null, "You need to create an array first!");
-                    main(null); 
+                    main(new String[] {});
                 } 
                 System.out.print("Now to multiply the array by a multiple of your choice. ");
                 int c = read();
@@ -52,7 +51,7 @@ public class Matrix {
             case 5: // check matrix for symmetry
                 if (matrix.length == 0) { // check for matrix
                     JOptionPane.showMessageDialog(null, "You need to create an array first!");
-                    main(null); 
+                    main(new String[] {}); 
                 } 
                 System.out.print("Is current matrix symmetric?");
                 isSymmetric(matrix);
@@ -61,7 +60,7 @@ public class Matrix {
             case 6:
                 System.exit(0);
             default:
-                main(null);
+                main(new String[] {"restart"});
         }
     }
     /**
@@ -83,8 +82,20 @@ public class Matrix {
 
                 for (int column = 0; column < split.length; column++) {
 
-                    // assign each column in current row, with values from split (args) array and convert to double
-                    matrix[row][column] = Double.parseDouble(split[column]);
+                    // copy the splitted string that represents a double
+                    String word = split[column];
+
+                    // if the returned string contains "null" remove it
+                    if (word.contains("null")) {
+                        String temp = "null";
+                        word = word.replaceAll(temp, "");
+                    }
+
+                    // convert the string to a double
+                    double num = Double.parseDouble(word);
+
+                    // assign the double to the matrix position
+                    matrix[row][column] = num;
                 }
                     
         }
@@ -119,14 +130,11 @@ public class Matrix {
      */
     public static int read(){
 
-        // create scanner object
-        Scanner scan = new Scanner(System.in);
-
         // prompt user to enter desired matrix size
-        System.out.print("Please enter a positive integer that is less than 100: ");
+		String userInput = JOptionPane.showInputDialog(null, "Please enter a positive integer that is less than 100: ");
 
         // read matrix size
-        int m = scan.nextInt();
+		int m = Integer.parseInt(userInput);
 
         // check for validity and return
         if (m > 99 || m < 1)
