@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"<Unnamed>","c":"Arrays","l":"Arrays()","url":"%3Cinit%3E()"},{"p":"<Unnamed>","c":"Arrays","l":"average(double[])"},{"p":"<Unnamed>","c":"Arrays","l":"average(int[])"},{"p":"<Unnamed>","c":"Arrays","l":"getValues(double[])"},{"p":"<Unnamed>","c":"Arrays","l":"main(String[])","url":"main(java.lang.String[])"}]

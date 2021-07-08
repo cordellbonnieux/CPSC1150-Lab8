@@ -1,8 +1,12 @@
 import javax.swing.*;
+import java.util.*;
 /**
  * CPSC 1150 - Lab 8 pt2
  * This program allows you to create and manipulate matricies through a GUI.
  *  
+ * Class: CPSC 1050 W01
+ * Instructor: Dr. Bita Shadgar
+ * 
  * @author Cordell Bonnieux
  * @since 2021/07/08
  * @version 1.0
