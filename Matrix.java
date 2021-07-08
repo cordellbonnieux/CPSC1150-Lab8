@@ -3,7 +3,7 @@ public class Matrix {
     public static void main(String[] args) {
 
         // read a matrix size
-        int m = readM();
+        int m = read();
 
         // Q1 - generate a matrix 
         double[][] matrix = genMatrix(m);
@@ -12,9 +12,19 @@ public class Matrix {
         printMatrix(matrix);
 
         // Q3 - is matrix symmetric?
-        // this is a symmetric array you can uncomment to test the method
-        //double[][] testArr = {{1,2,3},{2,4,5},{3,5,8}};
+        //double[][] testArr = {{1,2,3},{2,4,5},{3,5,8}}; // this is a symmetric array you can uncomment to test the method
         System.out.println("Is this matrix symmetric? " + ((isSymmetric(matrix)) ? "Yes" : "No"));
+
+        // Q4 - Read c then multiply each matricies by c
+        System.out.print("Now to multiply the array by a multiple of your choice. ");
+        int c = read();
+        multiply(matrix, c);
+        printMatrix(matrix);
+
+        // Q5 - Square the matrix
+        System.out.println("Here is the array squared by itself:");
+        double[][] matrixSquared = square(matrix);
+        printMatrix(matrixSquared);
 
 
     }
@@ -25,20 +35,20 @@ public class Matrix {
      * @return readM() recursively call the method if the integer is invalid
      * @return m return the matrix size if valid
      */
-    public static int readM(){
+    public static int read(){
 
         // create scanner object
         Scanner scan = new Scanner(System.in);
 
         // prompt user to enter desired matrix size
-        System.out.print("Please enter a matrix size (positive integer below 100): ");
+        System.out.print("Please enter a positive integer that is less than 100: ");
 
         // read matrix size
         int m = scan.nextInt();
 
         // check for validity and return
         if (m > 99 || m < 1)
-            return readM();
+            return read();
         else
             return m;
     }
@@ -107,9 +117,9 @@ public class Matrix {
     }
     /**
      * Question 3
-     * 
-     * @param matrix
-     * @return
+     * Takes in an array of doubles and tests to see if it is symmetrical or not     * 
+     * @param matrix the array of doubles to be tested
+     * @return true if symmetrical, otherwise false.
      */
     public static Boolean isSymmetric(double[][] matrix) {
 
@@ -122,5 +132,56 @@ public class Matrix {
         }
 
         return true;
+    }
+    /**
+     * Question 4
+     * Takes in a double 2D array and a double, then multiplies each item in that array by the double.
+     * @param matrix the matrix who's contents are to be multiplied
+     * @param c the multiple 
+     */
+    public static void multiply(double[][] matrix, double c) {
+
+        for (int i = 0; i < matrix.length; i++) {
+
+            for (int j = 0; j < matrix[i].length; j++) {
+
+                // multiply each item by c
+                matrix[i][j] = c * matrix[i][j];
+            }
+        }
+        System.out.println("The each item in the matrix now has been multiplied by " + c);
+    }
+    /**
+     * Question 5
+     * Write a method named Square that given a matrices of n
+     * rows and n columns of doubles, calculates, and returns the square of the given matrix.
+     * Or, Returns a new matrix (matrixN) that holds the square of matrix * matrix.
+     * @param matrix the 2D matrix to be squared
+     * @return matrixN a new matrix 
+     */
+    public static double[][] square(double[][] matrix) {
+
+        // to store new array
+        double[][] matrixN = new double[matrix.length][matrix.length];
+
+        for (int row = 0; row < matrix.length; row++) {
+
+            for (int column2 = 0; column2 < matrix[row].length; column2++) {
+
+                // holds the sum of each row
+                int rowSum = 0;
+
+                for (int column = 0, row2 = 0; column < matrix[row].length; column++, row2++) {
+                    
+                    rowSum += matrix[row][column] * matrix[row2][column2];
+
+                }
+
+                // put sum into new matrix
+                matrixN[row][column2] = rowSum;
+            }
+        }
+
+        return matrixN;
     }
 }
