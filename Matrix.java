@@ -1,10 +1,11 @@
-import javax.swing.JOptionPane;
+import javax.swing.*;
 /**
- * 
- * 
- * 
- * 
- * 
+ * CPSC 1150 - Lab 8 pt2
+ * This program allows you to create and manipulate matricies through a GUI.
+ *  
+ * @author Cordell Bonnieux
+ * @since 2021/07/08
+ * @version 1.0
  */
 public class Matrix {
     public static void main(String[] args) {
@@ -24,7 +25,7 @@ public class Matrix {
                 break;
             case 2: // print matrix
                 if (matrix.length == 0) { // check for matrix
-                    JOptionPane.showMessageDialog(null, "You need to create an array first!");
+                    JOptionPane.showMessageDialog(null, "You need to create a matrix first!");
                     main(new String[] {}); 
                 } 
                 printMatrix(matrix);
@@ -32,7 +33,7 @@ public class Matrix {
                 break;
             case 3: // square matrix
                 if (matrix.length == 0) { // check for matrix
-                    JOptionPane.showMessageDialog(null, "You need to create an array first!");
+                    JOptionPane.showMessageDialog(null, "You need to create a matrix first!");
                     main(new String[] {});
                 } 
                 square(matrix);
@@ -40,7 +41,7 @@ public class Matrix {
                 break;
             case 4: // multiply matrix
                 if (matrix.length == 0) { // check for matrix
-                    JOptionPane.showMessageDialog(null, "You need to create an array first!");
+                    JOptionPane.showMessageDialog(null, "You need to create a matrix first!");
                     main(new String[] {});
                 } 
                 System.out.print("Now to multiply the array by a multiple of your choice. ");
@@ -53,8 +54,7 @@ public class Matrix {
                     JOptionPane.showMessageDialog(null, "You need to create an array first!");
                     main(new String[] {}); 
                 } 
-                System.out.print("Is current matrix symmetric?");
-                isSymmetric(matrix);
+                JOptionPane.showMessageDialog(null, "Is this array symmetric? " + isSymmetric(matrix));
                 main(returnMatrix(matrix)); // return to main menu
                 break;
             case 6:
@@ -168,42 +168,42 @@ public class Matrix {
      * Question 2
      * Prints a 2D matrix array of type double to the console
      * 
-     * Must rework this one
+     * This method is completely re-wroked to work with jpanels, 
+     * so, it now deviates from the original question, but works correctly.
      * @param matrix a 2D double array to be printed
      */
     public static void printMatrix(double[][] matrix) {
 
-        for (int row = 0; row < matrix.length; row++) {
+            // create panel to display matricies
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-            // add a row heading
-            System.out.print("row #" + ((row < 9) ? "0" + (row+1) : (row+1)) + ":");
-            
-            for (int column = 0; column < matrix[row].length; column++) {
+            for (int row = 0; row < matrix.length; row++) {
 
-                // truncate the double to 2 decimal points
-                double num = Math.floor(matrix[row][column] * 100) / 100;
+                // create a row panel
+                JPanel rowPanel = new JPanel();
 
-                // add a 0 at the begining if needed 
-                if (num < 10) {
+                // create row label
+                JLabel rowLabel = new JLabel(String.format("row #%d", ((row < matrix[row].length) ? row : null)));
 
-                    System.out.print("  0" + num);
+                // add row label to panel
+                rowPanel.add(rowLabel);
 
-                    // add a 0 at the end if needed
-                    if (String.valueOf(num).length() < 4)
-                        System.out.print("0");
+                for (int column = 0; column < matrix[row].length; column++) {
 
-                } else {
+                    // create label for each num
+                    JLabel item = new JLabel(String.format("%-5.2f",(Math.floor(matrix[row][column] * 100) / 100)));
 
-                    System.out.print("  " + num);
-
-                    // add 0 to the end if needed
-                    if (String.valueOf(num).length() < 5)
-                        System.out.print("0");
+                    // add item to panel
+                    rowPanel.add(item);
                 }
-                System.out.print("  ");
+
+                // add to main panel
+                panel.add(rowPanel);
             }
-            System.out.println();
-        }
+
+            //display table
+            JOptionPane.showMessageDialog(null, panel);
     }
     /**
      * Question 3
