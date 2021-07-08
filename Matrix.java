@@ -1,32 +1,114 @@
 import java.util.*;
+import javax.swing.JOptionPane;
+/**
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
 public class Matrix {
     public static void main(String[] args) {
+        
+        // 2D array reference
+        double[][] matrix = ((args.length > 0) ? convertArray(args) : new double[0][0]);
 
-        // read a matrix size
-        int m = read();
+        String choice = JOptionPane.showInputDialog(null, "Enter the digit corresponding to your desired task: \n 1 : Create a new matrix \n 2 : Display current matrix \n 3 : Square current matrix \n 4 : Multiply current matrix with a coefficient \n 5 : Check if current matrix is symmetric \n 6 : Quit the program ");
 
-        // Q1 - generate a matrix 
-        double[][] matrix = genMatrix(m);
+		int selection = Integer.parseInt(choice);
 
-        // Q2 - print matrix
-        printMatrix(matrix);
+        switch (selection) {
+            case 1: // create matrix
+                int m = read(); // get matrix size
+                double[][] newMatrix = genMatrix(m); // generate matrix based on size
+                main(returnMatrix(newMatrix)); // return to main menu
+                break;
+            case 2: // print matrix
+                if (matrix.length == 0) { // check for matrix
+                    JOptionPane.showMessageDialog(null, "You need to create an array first!");
+                    main(null); 
+                } 
+                printMatrix(matrix);
+                main(returnMatrix(matrix)); // return to main menu
+                break;
+            case 3: // square matrix
+                if (matrix.length == 0) { // check for matrix
+                    JOptionPane.showMessageDialog(null, "You need to create an array first!");
+                    main(null); 
+                } 
+                square(matrix);
+                main(returnMatrix(matrix)); // return to main menu
+                break;
+            case 4: // multiply matrix
+                if (matrix.length == 0) { // check for matrix
+                    JOptionPane.showMessageDialog(null, "You need to create an array first!");
+                    main(null); 
+                } 
+                System.out.print("Now to multiply the array by a multiple of your choice. ");
+                int c = read();
+                multiply(matrix, c);
+                main(returnMatrix(matrix)); // return to main menu
+                break;
+            case 5: // check matrix for symmetry
+                if (matrix.length == 0) { // check for matrix
+                    JOptionPane.showMessageDialog(null, "You need to create an array first!");
+                    main(null); 
+                } 
+                System.out.print("Is current matrix symmetric?");
+                isSymmetric(matrix);
+                main(returnMatrix(matrix)); // return to main menu
+                break;
+            case 6:
+                System.exit(0);
+            default:
+                main(null);
+        }
+    }
+    /**
+     * This method takes a array of strings that was passed into main()
+     * and converts it into a 2D array of doubles.
+     * @param args a previously created matrix, that has been converted
+     * @return matrix a 2D array of doubles converted from args
+     */
+    public static double[][] convertArray(String[] args) {
+    
+        // 2D array to store converted array numbers
+        double[][] matrix = new double[args.length][args.length];
 
-        // Q3 - is matrix symmetric?
-        //double[][] testArr = {{1,2,3},{2,4,5},{3,5,8}}; // this is a symmetric array you can uncomment to test the method
-        System.out.println("Is this matrix symmetric? " + ((isSymmetric(matrix)) ? "Yes" : "No"));
+        // fill the matrix with current matrix
+        for (int row = 0; row < args.length; row++) {
+                    
+                // take the current array item in args and split into it's own array
+                String[] split = args[row].split(":");
 
-        // Q4 - Read c then multiply each matricies by c
-        System.out.print("Now to multiply the array by a multiple of your choice. ");
-        int c = read();
-        multiply(matrix, c);
-        printMatrix(matrix);
+                for (int column = 0; column < split.length; column++) {
 
-        // Q5 - Square the matrix
-        System.out.println("Here is the array squared by itself:");
-        double[][] matrixSquared = square(matrix);
-        printMatrix(matrixSquared);
+                    // assign each column in current row, with values from split (args) array and convert to double
+                    matrix[row][column] = Double.parseDouble(split[column]);
+                }
+                    
+        }
+        return matrix;
+    }
+    /**
+     * This method is used to return a 1D string version of a 2D double matrix array
+     * so that it can be used as a parameter in main().
+     * @param matrix a 2D array of doubles, to be converted
+     * @return stringMatrix a 1D string array, where each row holds all columns of the matching row of matrix
+     */
+    public static String[] returnMatrix(double[][] matrix) {
 
+        String[] stringMatrix = new String[matrix.length];
 
+        // fill the string matrix with stringified doubles from matrix
+        // each row contains all columns separated by ":"s
+        for (int row = 0; row < matrix.length; row++) {
+            for (int column = 0; column < matrix.length; column++) {
+                stringMatrix[row] += String.valueOf(matrix[row][column]) + ":";
+            }
+        }
+
+        return stringMatrix;
     }
     /**
      * Read an integer to be used as a matrix size. 
@@ -157,12 +239,12 @@ public class Matrix {
      * rows and n columns of doubles, calculates, and returns the square of the given matrix.
      * Or, Returns a new matrix (matrixN) that holds the square of matrix * matrix.
      * @param matrix the 2D matrix to be squared
-     * @return matrixN a new matrix 
+     * @return matrixN a new matrix to be returned
      */
     public static double[][] square(double[][] matrix) {
 
         // to store new array
-        double[][] matrixN = new double[matrix.length][matrix.length];
+        double[][] matrixN = new double[matrix.length][matrix[0].length];
 
         for (int row = 0; row < matrix.length; row++) {
 
@@ -177,7 +259,7 @@ public class Matrix {
 
                 }
 
-                // put sum into new matrix
+                // put sum into new matrix position
                 matrixN[row][column2] = rowSum;
             }
         }
